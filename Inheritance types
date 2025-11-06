@@ -1,0 +1,84 @@
+#include <iostream>
+using namespace std;
+//Base class (Parent class)
+class Person {      
+public:   
+    // Function in base class
+    void getinfo() {
+        cout << "I am a person in the university" << endl;
+    }
+};
+//Single Inheritance
+//Student inherits properties and methods of Person
+class Student : public Person {
+public:
+    void study() {
+        cout << "Student studies in the university" << endl;
+    }
+};
+//Multilevel Inheritance
+//Employee inherits from Person → Professor inherits from Employee
+class Employee : public Person {
+public:
+    void work() {
+        cout << "Employee works in the university" << endl;
+    }
+};
+// Professor inherits from Employee (which already inherited from Person)
+class Professor : public Employee {
+public:
+    void teach() {
+        cout << "Professor teaches students" << endl;
+    }
+};
+//Multiple Inheritance
+//A class inherits from more than one base class
+class Researcher {
+public:
+    void research() {
+        cout << "Researcher does research in labs" << endl;
+    }
+};
+// ResearchProfessor inherits from both Professor and Researcher
+class ResearchProfessor : public Professor, public Researcher {
+public:
+    void guide() {
+        cout << "Research Professor guides PhD students" << endl;
+    }
+};
+//Hierarchical Inheritance
+// Multiple classes inherit from the same base class (Person)
+class Staff : public Person {
+public:
+    void assist() {
+        cout << "Staff assists in university administration" << endl;
+    }
+};
+int main() {
+    //Single Inheritance Example
+    cout << "- Single Inheritance -" << endl;
+    Student s;
+    s.getinfo();   // from Person
+    s.study();     // from Student
+
+    //Multilevel Inheritance Example
+    cout<<"\n- Multilevel Inheritance -"<< endl;
+    Professor p;
+    p.getinfo();   // from Person (grandparent)
+    p.work();      // from Employee (parent)
+    p.teach();     // from Professor (child)
+
+    //Multiple Inheritance Example
+    cout << "\n- Multiple Inheritance -" << endl;
+    ResearchProfessor rp;
+    rp.teach();     // from Professor
+    rp.research();  // from Researcher
+    rp.guide();     // from ResearchProfessor
+
+    //Hierarchical Inheritance Example
+    cout << "\n- Hierarchical Inheritance -" << endl;
+    Staff st;
+    st.getinfo();  // from Person
+    st.assist();   // from Staff
+    return 0;
+}
