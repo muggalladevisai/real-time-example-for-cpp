@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class BankAccount {
+private:
+    char *accountHolder;  // Pointer for dynamically allocated name
+    double *balance;      // Pointer for dynamically allocated balance
+public:
+    //Parameterized constructor
+    BankAccount(const char *name, double bal) {
+        // Allocate new memory for accountHolder (dynamic memory allocation)
+        accountHolder = new char[strlen(name) + 1];  
+        strcpy(accountHolder, name);  // Copy name into new memory
+
+        // Allocate memory for balance and store the initial balance
+        balance = new double;         
+        *balance = bal;               
+    }
+    //Copy Constructor (Deep Copy)
+    BankAccount(const BankAccount &b) {
+        // Allocate new memory for the copied object's accountHolder
+        accountHolder = new char[strlen(b.accountHolder) + 1];
+        strcpy(accountHolder, b.accountHolder);  // Copy name
+
+        // Allocate separate memory for balance and copy its value
+        balance = new double;
+        *balance = *(b.balance);
+        // Each object now has its own separate memory (deep copy)
+    }
+    //Display account details
+    void show() {
+        cout << "Account Holder: " << accountHolder << ", Balance: " << *balance << endl;
+    }
+    //Deposit function
+    void deposit(double amount) {
+        *balance += amount;  // Add the deposit amount to this account's balance
+    }
+    //Destructor (to free dynamically allocated memory)
+    ~BankAccount() {
+        delete[] accountHolder;  // Free memory allocated for name
+        delete balance;          // Free memory allocated for balance
+    }
+};
+int main() {
+    // Create first account (calls parameterized constructor)
+    BankAccount acc1("sai", 5000);
+    
+    // Create second account as a copy of acc1 (calls copy constructor)
+    BankAccount acc2 = acc1;
+
+    cout << "Before depositing:" << endl;
+    acc1.show();  // Shows acc1 details (balance = 5000)
+    acc2.show();  // Shows acc2 details (balance = 5000)
+
+    // Deposit 2000 into acc1 only
+    acc1.deposit(2000);
+
+    cout << "\nAfter depositing 2000 in acc1:" << endl;
+    acc1.show();  // Shows updated balance = 7000
+    acc2.show();  // Still shows 5000 (proof of deep copy)
+    return 0;
+}
