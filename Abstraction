@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+//Abstract Class — used for Abstraction
+//It only defines *what to do*, not *how to do it*
+class BankService {
+public:
+    //Pure Virtual Functions — must be implemented in derived classes
+    virtual void withdraw(double amount) = 0;   // pure virtual function
+    virtual void deposit(double amount) = 0;
+    virtual void checkBalance() = 0;
+};
+
+//Derived Class implementing the abstract methods
+class BankAccount : public BankService {
+private:
+    double balance;   // Data member to store account balance
+public:
+    //Constructor — initializes balance when object is created
+    BankAccount(double bal) {
+        balance = bal;
+    }
+    //Function to withdraw amount
+    void withdraw(double amount) override {
+        if (amount <= balance) {          // Check if sufficient balance
+            balance -= amount;            // Deduct amount
+            cout << "Withdrawn: " << amount << endl;
+        } 
+        else {
+            cout << "Insufficient balance" << endl;
+        }
+    }
+    //Function to deposit amount
+    void deposit(double amount) override {
+        if (amount > 0) {                 // Only allow positive deposits
+            balance += amount;
+            cout << "Deposited: " << amount << endl;
+        } 
+        else {
+            cout << "Invalid deposit amount" << endl;
+        }
+    }
+    //Function to display current balance
+    void checkBalance() override {
+        cout << "Current Balance: " << balance << endl;
+    }
+};
+//Main Function — program execution starts here
+int main() {
+    BankAccount acc(5000);   // Create object with initial balance ₹5000
+
+    acc.deposit(2000);       // Deposit ₹2000 → total = ₹7000
+    acc.withdraw(3000);      // Withdraw ₹3000 → remaining = ₹4000
+    acc.checkBalance();      // Show current balance ₹4000
+    return 0;
+}
