@@ -1,0 +1,61 @@
+include <iostream>
+using namespace std;
+// Base class
+class Bank {
+private:
+    double balance;        // Private: Only accessible inside Bank class
+protected:
+    int customerID;        // Protected: Accessible inside derived (child) classes
+public:
+    string name;           // Public: Accessible from anywhere
+    // Parameterized constructor (initializes name, id, and balance)
+    Bank(string n, int id, double bal) {
+        name = n;
+        customerID = id;
+        balance = bal;
+    }
+    // Deposit function — adds money to the balance
+    void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            cout << "Deposited: " << amount << endl;
+        }
+    }
+    // Withdraw function — subtracts money from balance if sufficient funds
+    void withdraw(double amount) {
+        if (amount <= balance)
+            balance -= amount;
+        else
+            cout << "Insufficient balance" << endl;
+    }
+    // Public function to show current balance
+    void showBalance() {
+        cout << "Current balance: " << balance << endl;
+    }
+};
+// Derived class (Employee inherits from Bank)
+class Empolyee : public Bank {
+public:
+    // Constructor calls base class constructor to initialize inherited members
+    Empolyee(string n, int id, double bal) : Bank(n, id, bal) {}
+    // Function to show protected and public data
+    void showCustomerDetails() {
+        cout << "Customer Name: " << name << endl;        // public member accessible
+        cout << "Customer ID: " << customerID << endl;    // protected member accessible
+        // balance is private → not accessible here
+    }
+};
+// Main function
+int main() {
+    // Creating object of derived class with name, ID, and balance
+    Empolyee emp("Sai", 101, 5000);
+    // Using public functions of base class through derived object
+    emp.deposit(2000);      // Adds 2000 → total = 7000
+    emp.withdraw(1000);     // Subtracts 1000 → total = 6000
+    emp.showBalance();      // Displays current balance (6000)
+    emp.showCustomerDetails(); // Shows name and ID
+
+    // Private & protected members cannot be accessed directly:
+    // cout << emp.customerID;   Error (protected)
+    // cout << emp.balance;      Error (private)
+}
