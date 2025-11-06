@@ -1,0 +1,76 @@
+#include <iostream>
+using namespace std;
+//Abstract Base Class (Interface-like class)
+class BankService {
+public:
+    // Constructor of abstract class (can still have one)
+    BankService() {
+        cout << "BankService started" << endl;
+    }
+    // Pure Virtual Destructor
+    // Declaring a virtual destructor as pure (=0) makes this class abstract
+    // It ensures proper cleanup when deleting derived objects through base pointers.
+    virtual ~BankService() = 0;
+};
+
+//Definition of pure virtual destructor (must be defined outside the class)
+BankService::~BankService() {
+    cout << "BankService cleanup done" << endl;
+}
+//Derived Class 1 — BankAccount (Intermediate Class)
+class BankAccount : public BankService {
+public:
+    BankAccount() {
+        cout << "BankAccount created" << endl;
+    }
+    //Virtual Destructor
+    // Ensures that derived destructors (SavingsAccount, LoanAccount) are called properly.
+    virtual ~BankAccount() {
+        cout << "BankAccount destroyed" << endl;
+    }
+};
+//Derived Class 2 — SavingsAccount
+class SavingsAccount : public BankAccount {
+    double *balance; // dynamically allocated memory
+public:
+    // Parameterized constructor
+    SavingsAccount(double bal) {
+        // Allocating memory dynamically
+        balance = new double(bal);
+        cout << "SavingsAccount created with balance: " << *balance << endl;
+    }
+    //Destructor releases allocated memory
+    ~SavingsAccount() {
+        cout << "SavingsAccount destroyed, freeing balance memory" << endl;
+        delete balance; // free heap memory to avoid memory leaks
+    }
+};
+//Derived Class 3 — LoanAccount
+class LoanAccount : public BankAccount {
+    int *loanAmount; // dynamically allocated memory
+public:
+    // Parameterized constructor
+    LoanAccount(int loan) {
+        loanAmount = new int(loan);
+        cout << "LoanAccount created with loan: " << *loanAmount << endl;
+    }
+    //Destructor releases allocated memory
+    ~LoanAccount() {
+        cout << "LoanAccount destroyed, freeing loan memory" << endl;
+        delete loanAmount; //free heap memory
+    }
+};
+// Main Function
+int main() {
+    cout << "- Saving Account Test -" << endl;
+
+    // Creating object dynamically using base class pointer (polymorphism)
+    BankService *s1 = new SavingsAccount(15000);
+    delete s1; //Calls destructors in reverse order: SavingsAccount → BankAccount → BankService
+
+    cout << "- Loan Account Test -" << endl;
+
+    // Creating another object dynamically
+    BankService *l1 = new LoanAccount(60000);
+    delete l1; //Calls destructors in reverse order: LoanAccount → BankAccount → BankService
+}
