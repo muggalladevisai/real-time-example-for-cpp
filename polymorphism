@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+class BankAccount {
+    string accountHolder;  // Stores the name of the account holder
+    double balance;        // Stores the account balance
+public:
+    //Parameterized constructor with default arguments
+    // If no values are given, name = "unknown" and balance = 0
+    BankAccount(string name = "unknown", double bal = 0) {
+        accountHolder = name;
+        balance = bal;
+    }
+    //Function Overloading Example 1 — Deposit using cash
+    void deposit(double amount) {
+        balance += amount; // Adds the deposited amount to balance
+        cout << "Deposited cash: " << amount << endl;
+    }
+    //Function Overloading Example 2 — Deposit using cheque
+    void deposit(double amount, string chequeNo) {
+        balance += amount; // Adds the cheque amount to balance
+        cout << "Deposited by cheque (" << chequeNo << "): " << amount << endl;
+    }
+    //Operator Overloading Example — '+' operator
+    // Combines two BankAccount objects into a new one
+    BankAccount operator+(const BankAccount &other) {
+        // Combines names and adds balances
+        return BankAccount(this->accountHolder + " & " + other.accountHolder,
+                           this->balance + other.balance);
+    }
+    //Operator Overloading Example — '==' operator
+    // Compares the balances of two accounts
+    bool operator==(const BankAccount &other) {
+        return this->balance == other.balance;
+    }
+    //Function to display account details
+    void show() {
+        cout << "AccountHolder: " << accountHolder
+             << ", Balance: " << balance << endl;
+    }
+};
+int main() {
+    // Create two bank account objects with initial balances
+    BankAccount acc1("sai", 5000);
+    BankAccount acc2("durga", 3000);
+
+    // Demonstrate function overloading
+    acc1.deposit(2000);             // Calls deposit(double)
+    acc1.deposit(5000, "CHQ12345"); // Calls deposit(double, string)
+
+    // Display both accounts
+    acc1.show();
+    acc2.show();
+
+    // Demonstrate '+' operator overloading
+    // Merges acc1 and acc2 into a new account
+    BankAccount merged = acc1 + acc2;
+    merged.show();
+
+    // Demonstrate '==' operator overloading
+    if (acc1 == acc2)
+        cout << "Both accounts have the same balance" << endl;
+    else
+        cout << "Balances are different" << endl;
+    return 0;
+}
