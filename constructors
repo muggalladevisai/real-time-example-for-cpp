@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+class Aadhar {
+    string aadharNo;   // Data member to store Aadhar number
+    string name;       // Data member to store person name
+public:
+    //Default Constructor (no arguments)
+    //This runs automatically when an object is created without parameters
+    Aadhar() {
+        aadharNo = "0000-0000-0000";
+        name = "unknown";
+        cout << "Default constructor called" << endl;
+    }
+    //Parameterized Constructor
+    //This runs when object is created with specific values
+    Aadhar(string no, string n) {
+        aadharNo = no;
+        name = n;
+        cout << "Parameterized constructor called" << endl;
+    }
+    // Copy Constructor
+    // This runs when an object is created from another existing object
+    Aadhar(const Aadhar &obj) {
+        aadharNo = obj.aadharNo;  // Copying Aadhar number
+        name = obj.name;          // Copying Name
+        cout << "Copy constructor called" << endl;
+    }
+    //Member function to display Aadhar details
+    void show() {
+        cout << "Aadhar: " << aadharNo << ", Name: " << name << endl;
+    }
+};
+//main() function — program starts here
+     int main() {
+    //Object created using Default Constructor
+    Aadhar obj1;     // Calls default constructor
+    obj1.show();
+
+    //Object created using Parameterized Constructor
+    Aadhar obj2("1111-2222-3333", "Durga");   // Calls parameterized constructor
+    obj2.show();
+
+    // Object created using Copy Constructor
+    Aadhar obj3 = obj2;   // Calls copy constructor
+    obj3.show();
+    return 0;
+}
