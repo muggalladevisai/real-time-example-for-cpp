@@ -1,0 +1,22 @@
+#include <iostream>
+using namespace std;
+//Class Definition
+class Bank {
+public:
+    // Inline Function
+    // 'inline' suggests to the compiler to insert the function’s code directly at the call location.
+    // This avoids function call overhead for small, frequently used functions.
+    inline double calculateInterest(double balance, double rate) {
+        return (balance * rate) / 100;  // Formula: (P * R) / 100
+    }
+};
+int main() {
+    Bank b;           //Create object of Bank class
+
+    double bal = 10000;  // Account balance
+    double rate = 5;     // Interest rate (5%)
+
+    cout << "Balance: " << bal << endl;   // Output: 10000
+    cout << "Interest (5%): " << b.calculateInterest(bal, rate) << endl; // Output: 500
+    return 0;  //Program executed successfully
+}
