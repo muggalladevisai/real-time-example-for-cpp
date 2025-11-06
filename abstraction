@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+//Class representing a student
+class student {
+private:
+    //Private data members — cannot be accessed directly (Data Hiding)
+    int rollNo;    
+    string name;
+public:
+    //Setter methods — allow controlled *write access* to private data
+    void setrollNo(int r) {
+        rollNo = r;    // set the student's roll number
+    }
+    void setname(string n) {
+        name = n;      // set the student's name
+    }
+    //Getter methods — allow *read access* to private data
+    int getrollNo() {
+        return rollNo; // return roll number
+    }
+    string getname() {
+        return name;   // return name
+    }
+};
+int main() {
+    student obj;   //Create object of student class
+    //Set values using setter functions (Encapsulation)
+    obj.setrollNo(101);  
+    obj.setname("sai");
+    //Access values using getter functions
+    cout << "Roll No: " << obj.getrollNo() << endl;
+    cout << "Name: " << obj.getname() << endl;
+    return 0;
+}
